@@ -8,7 +8,6 @@ def index(request):
 
 def question_detail(request, pk):
     question = Question.objects.get(id=pk)
-    print("I love merge conflicts.")
     return render(request, 'qna/question.html', context={'question': question})
 
 
