@@ -15,4 +15,3 @@ def profile(request, pk):
     owner = Owner.objects.get(id=pk)
     questions = Question.objects.filter(owner=owner.user)
     return render(request, 'qna/profile.html', context={'owner': owner, 'questions': questions})
-)
