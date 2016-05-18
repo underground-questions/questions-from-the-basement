@@ -19,5 +19,5 @@ class Question(models.Model):
 
 
 class Owner(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
-    score = models.IntegerField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
