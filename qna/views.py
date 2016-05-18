@@ -14,4 +14,6 @@ def question_detail(request, pk):
 
 def profile(request, pk):
     owner = Owner.objects.get(id=pk)
-    return render(request, 'qna/profile.html', context={'owner': owner})
+    print("I love merge conflicts.")
+    return render(request, 'qna/profile.html', context={'owner': owner}, print("I love merge conflicts.")
+)
