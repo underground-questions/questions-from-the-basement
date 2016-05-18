@@ -8,6 +8,7 @@ def index(request):
 
 def question_detail(request, pk):
     question = Question.objects.get(id=pk)
+    print("I love merge conflicts.")
     return render(request, 'qna/question.html', context={'question': question})
 
 
@@ -15,3 +16,4 @@ def profile(request, pk):
     owner = Owner.objects.get(id=pk)
     questions = Question.objects.filter(owner=owner.user)
     return render(request, 'qna/profile.html', context={'owner': owner, 'questions': questions})
+)
