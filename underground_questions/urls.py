@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^', include('qna.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('django.contrib.auth.urls')),
-    url(r'^register/', views.register, name='register')
+    url(r'^register/', views.register, name='register'),
+    url(r'^user_redirect/', views.user_redirect, name='user_redirect'),
 ]

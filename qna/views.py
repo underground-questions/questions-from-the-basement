@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from .models import Question, Answer, Owner
@@ -24,12 +24,16 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.set_password(user.password)
-            user.save()
             owner = Owner(user=user)
             owner.save()
+            return HttpResponseRedirect('/login')
         else:
             print(form.errors)
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', context={'form': form})
+
+
+def user_redirect(request):
+    url = '/profile/{}/'.format(request.user.owner.id)
+    return HttpResponseRedirect(url)
