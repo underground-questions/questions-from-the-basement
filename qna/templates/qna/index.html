@@ -1,2 +1,13 @@
 {% extends 'qna/base.html' %}
-This is the index page.
+
+{% block content %}
+<h1> Most Recent Questions </h1>
+
+{% for question in recent_question %}
+  {{question.created}}
+  <p>
+    <a href="{% url 'question_detail' question.id %}">{{question.title}}</a>
+  </p>
+  {% endfor %}
+
+{% endblock %}
