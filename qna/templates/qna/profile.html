@@ -7,6 +7,7 @@
 <body>
 
 {% if questions %}
+<h3>Score: {{owner.score}}</h3>
 <h2>Questions from {{owner.user.username}}</h2>
     <ul class="question_links">
         {% for question in questions %}
