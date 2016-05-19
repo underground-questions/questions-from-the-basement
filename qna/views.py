@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
-from .forms import QuestionForm
+from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Owner
 
 def index(request):
@@ -10,8 +10,27 @@ def index(request):
 
 
 def question_detail(request, pk):
+    context = {}
+
     question = Question.objects.get(id=pk)
-    return render(request, 'qna/question.html', context={'question': question})
+    context['question'] = question
+
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.owner = request.user
+            answer.question = question
+            answer.save()
+        else:
+            print(form.errors)
+
+    answers = Answer.objects.filter(question=question)
+    context['answers'] = answers
+
+    form = AnswerForm()
+    context['form'] = form
+    return render(request, 'qna/question.html', context)
 
 
 def profile(request, pk):

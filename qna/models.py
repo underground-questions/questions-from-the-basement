@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Answer(models.Model):
     text = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    votes = models.IntegerField()
+    votes = models.IntegerField(default=0)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
