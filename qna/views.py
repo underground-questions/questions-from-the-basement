@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
-from .forms import QuestionForm, AnswerForm
+from .forms import QuestionForm, AnswerForm, TagForm
 from .models import Question, Answer, Owner
 from django.db.models import Count
 
@@ -47,14 +47,16 @@ def profile(request, pk):
     context['owner'] = owner
 
     if request.method == "POST":
-        form = QuestionForm(request.POST)
-        Question.handle_form(owner, form)
+        q_form = QuestionForm(request.POST)
+        tags = request.POST.getlist('topic')
+        print(tags)
+        Question.handle_form(owner, q_form)
 
     questions = Question.objects.filter(owner=owner)
     context['questions'] = questions
 
-    form = QuestionForm()
-    context['form'] = form
+    context['q_form'] = QuestionForm()
+    context['t_form'] = TagForm()
     return render(request, 'qna/profile.html', context)
 
 

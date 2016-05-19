@@ -1,19 +1,12 @@
 from django import forms
-from .models import Question, Answer
+from .models import Question, Answer, Tag
 
 
 class QuestionForm(forms.ModelForm):
-    TAG_CHOICES = (('SQL', 'SQL'), ('Java', 'Java'), ('Python', 'Python'),
-                   ('Javascript', 'Javascript'), ('Django', 'Django'),
-                   ('C++', 'C++'), ('Ruby', 'Ruby'), ('PHP', 'PHP'))
-
-    categories = forms.MultipleChoiceField(
-        required=False, widget=forms.CheckboxSelectMultiple,
-        choices=TAG_CHOICES)
 
     class Meta:
         model = Question
-        fields = ['title', 'description', 'categories']
+        fields = ['title', 'description']
 
 
 class AnswerForm(forms.ModelForm):
@@ -21,3 +14,14 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['text']
+
+
+class TagForm(forms.ModelForm):
+    topic = forms.MultipleChoiceField(
+                    required=False,
+                    widget=forms.CheckboxSelectMultiple,
+                    choices=Tag.TAG_CHOICES)
+
+    class Meta:
+        model = Tag
+        fields = ('__all__')
