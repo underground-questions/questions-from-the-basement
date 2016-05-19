@@ -10,7 +10,8 @@ from django.db.models import Count
 
 def index(request):
     recent_question = Question.objects.order_by('-created')[:5]
-    context = {'recent_question': recent_question}
+    form = QuestionForm()
+    context = {'recent_question': recent_question, 'form': form}
     return render(request, 'qna/index.html', context)
 
 
@@ -31,6 +32,7 @@ def question_detail(request, pk):
             print(form.errors)
 
     answers = Answer.objects.filter(question=question)
+    answers.order_by(-votes)
     context['answers'] = answers
 
     form = AnswerForm()

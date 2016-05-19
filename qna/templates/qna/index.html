@@ -3,11 +3,33 @@
 {% block content %}
 <h1> Most Recent Questions </h1>
 
+<p>
+    Welcome to Underground Questions. Feel free to browse, but you must be logged in to post new questions or answer existing questions.
+</p>
+
 {% for question in recent_question %}
-  {{question.created}}
-  <p>
-    <a href="{% url 'question_detail' question.id %}">{{question.title}}</a>
-  </p>
-  {% endfor %}
+<div class="question_print">
+
+    <p>
+        <a href="{% url 'question_detail' question.id %}">{{question.title}}</a>
+    </p>
+    <p>
+        {{question.created}}&nbsp;&nbsp;<a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a>
+    </p>
+</div>
+{% endfor %}
+
+{% if user.is_authenticated %}
+<div class="question_form">
+
+    <h2>Ask a new question</h2>
+
+    <form id="question_form" method="post" action="">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+
+</div>
+{% endif %}
 
 {% endblock %}

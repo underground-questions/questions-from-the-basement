@@ -7,6 +7,7 @@
 
 {% if request.user.is_anonymous %}
 &nbsp;&nbsp; | &nbsp;&nbsp; <a href="{% url 'login' %}">Login</a>
+&nbsp;&nbsp; | &nbsp;&nbsp;  <a href="{% url 'register' %}">Register</a>
 {% endif %}
 &nbsp;&nbsp; | &nbsp;&nbsp; <a href="{% url 'home' %}">Home</a>
 
