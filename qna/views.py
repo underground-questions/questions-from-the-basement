@@ -24,7 +24,7 @@ def question_detail(request, pk):
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
-            answer.owner = request.user
+            answer.owner = request.user.owner
             answer.question = question
             answer.save()
         else:
@@ -48,14 +48,14 @@ def profile(request, pk):
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
-            question.owner = User.objects.get(owner=owner)
+            question.owner = owner
             question.save()
             owner.score += 5
             owner.save()
         else:
             print(form.errors)
 
-    questions = Question.objects.filter(owner=owner.user)
+    questions = Question.objects.filter(owner=owner)
     context['questions'] = questions
 
     form = QuestionForm()
