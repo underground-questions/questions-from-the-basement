@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class Answer(models.Model):
     text = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     votes = models.IntegerField(default=0)
+    owner = models.ForeignKey('Owner', on_delete=models.CASCADE)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -13,7 +13,7 @@ class Answer(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey('Owner', on_delete=models.CASCADE)
     categories = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
 
