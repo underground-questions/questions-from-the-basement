@@ -1,31 +1,33 @@
 {% extends 'qna/base.html' %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Profile</title>
-  </head>
+{% block nav-global %}<title>Profile</title>{% endblock %}
 
 {% block content %}
-  <body>
-    <h1>Ask a new question</h1>
 
-    <form id="question_form" method="post" action="">
-        {% csrf_token %}
+<body>
+
+{% if questions %}
+<h2>Questions from {{owner.user.username}}</h2>
+    <ul class="question_links">
+        {% for question in questions %}
+            <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if request.user == owner.user %}
+    <div class="question_form">
+
+    <h2>Ask a new question</h2>
+
+    <form id="question_form" method="post" action="">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" name="submit" value="Submit" />
     </form>
 
-    {% if questions %}
-      {% for question in questions %}
-        <p>
-          {{question.title}}
-        </p>
-        {% endfor %}
-      {% endif %}
-  </body>
+    </div>
+{% endif %}
+
+</body>
 
 {% endblock %}
-
-</html>

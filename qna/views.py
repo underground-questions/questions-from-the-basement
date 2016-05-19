@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 from .forms import QuestionForm
 from .models import Question, Answer, Owner
@@ -24,7 +25,7 @@ def profile(request, pk):
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
-            question.owner = request.user
+            question.owner = User.objects.get(owner=owner)
             question.save()
         else:
             print(form.errors)
