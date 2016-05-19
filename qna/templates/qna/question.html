@@ -11,6 +11,13 @@
   <body>
 
   <h1>{{question.title}}</h1>
+  <p>{{question.description}}</p>
+  <p>Asked by {{question.owner}} on {{question.created}}</p>
+
+  {% for category in question.categories %}
+    <p>{{category}}</p>
+  {% endfor %}
+
 
     {% if answers %}
       {% for answer in answers %}
