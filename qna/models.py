@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Answer(models.Model):
     text = models.TextField()
     votes = models.IntegerField(default=0)
@@ -17,6 +16,15 @@ class Question(models.Model):
     categories = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
 
+    def handle_form(owner, form):
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.owner = owner
+            question.save()
+            owner.score += 5
+            owner.save()
+        else:
+            print(form.errors)
 
 class Owner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

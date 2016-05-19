@@ -32,7 +32,7 @@ def question_detail(request, pk):
             print(form.errors)
 
     answers = Answer.objects.filter(question=question)
-    answers.order_by(-votes)
+    answers.order_by('-votes')
     context['answers'] = answers
 
     form = AnswerForm()
@@ -48,14 +48,7 @@ def profile(request, pk):
 
     if request.method == "POST":
         form = QuestionForm(request.POST)
-        if form.is_valid():
-            question = form.save(commit=False)
-            question.owner = owner
-            question.save()
-            owner.score += 5
-            owner.save()
-        else:
-            print(form.errors)
+        Question.handle_form(owner, form)
 
     questions = Question.objects.filter(owner=owner)
     context['questions'] = questions
