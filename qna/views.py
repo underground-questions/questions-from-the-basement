@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Owner
-from django.db.models import Count
 
 
 def index(request):
@@ -37,6 +36,7 @@ def question_detail(request, pk):
 
     form = AnswerForm()
     context['form'] = form
+
     return render(request, 'qna/question.html', context)
 
 

@@ -8,25 +8,27 @@
   </head>
 
 {% block content %}
-  <body>
+<body>
 
   <h1>{{question.title}}</h1>
+  <br />
   <p>{{question.description}}</p>
-  <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner}}</a> on {{question.created}}</p>
+  <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
 
   {% for category in question.categories %}
     <p>{{category}}</p>
   {% endfor %}
 
+  {% if answers %}
+    {% for answer in answers %}
+      <p>
+        {{answer.text}}
+        Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
+      </p>
+      {% endfor %}
+    {% endif %}
 
-    {% if answers %}
-      {% for answer in answers %}
-        <p>
-          {{answer.text}}
-        </p>
-        {% endfor %}
-      {% endif %}
-
+    <br />
     <h3>Submit a new answer</h3>
 
     <form id="answer_form" method="post" action="">
@@ -35,9 +37,10 @@
         <input type="submit" name="submit" value="Submit" />
     </form>
 
-
   </body>
 
 {% endblock %}
 
 </html>
+
+Move/Sort answers based on their total votes. Highest voted at the top.
