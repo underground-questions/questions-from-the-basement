@@ -27,6 +27,8 @@ def profile(request, pk):
             question = form.save(commit=False)
             question.owner = User.objects.get(owner=owner)
             question.save()
+            owner.score += 5
+            owner.save()
         else:
             print(form.errors)
 
