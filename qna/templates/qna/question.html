@@ -12,7 +12,7 @@
 
   <h1>{{question.title}}</h1>
   <p>{{question.description}}</p>
-  <p>Asked by {{question.owner}} on {{question.created}}</p>
+  <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner}}</a> on {{question.created}}</p>
 
   {% for category in question.categories %}
     <p>{{category}}</p>
