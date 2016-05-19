@@ -5,9 +5,13 @@ from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Owner
+from django.db.models import Count
+
 
 def index(request):
-    return render(request, 'qna/index.html')
+    recent_question = Question.objects.order_by('-created')[:5]
+    context = {'recent_question': recent_question}
+    return render(request, 'qna/index.html', context)
 
 
 def question_detail(request, pk):
