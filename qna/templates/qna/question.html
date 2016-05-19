@@ -1,0 +1,36 @@
+{% extends 'qna/base.html' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Question</title>
+  </head>
+
+{% block content %}
+  <body>
+
+  <h1>{{question.title}}</h1>
+
+    {% if answers %}
+      {% for answer in answers %}
+        <p>
+          {{answer.text}}
+        </p>
+        {% endfor %}
+      {% endif %}
+
+    <h3>Submit a new answer</h3>
+
+    <form id="answer_form" method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+
+
+  </body>
+
+{% endblock %}
+
+</html>
