@@ -15,7 +15,7 @@
   <p>{{question.description}}</p>
   <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
 
-  {% for category in question.categories %}
+  {% for category in question.categories.all %}
     <p>{{category}}</p>
   {% endfor %}
 

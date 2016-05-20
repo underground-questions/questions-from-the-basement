@@ -39,6 +39,7 @@ class Question(models.Model):
         else:
             print(q_form.errors)
 
+
 class Owner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
@@ -53,3 +54,6 @@ class Tag(models.Model):
                    ('C++', 'C++'), ('Ruby', 'Ruby'), ('PHP', 'PHP'))
 
     topic = models.CharField(max_length=25, choices=TAG_CHOICES)
+
+    def __str__(self):
+        return self.topic
