@@ -1,50 +1,44 @@
 {% extends 'qna/base.html' %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'qna/style.css' %}" />
-    <meta charset="utf-8">
-    <title>Question</title>
-  </head>
-
+<title>Question</title>
 {% block content %}
 <body>
+  <div class="container">
+    <div class="row">
 
-  <h1>{{question.title}}</h1>
-  <br />
-  <p>{{question.description}}</p>
-  <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
+      <h1>{{question.title}}</h1>
+      <br />
 
-  {% for category in question.categories.all %}
-    <p>{{category}}</p>
-  {% endfor %}
+      <p>{{question.description}}</p>
+      <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
 
-  {% if answers %}
-    {% for answer in answers %}
-      <p>
-        {{answer.text}}
-        Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
-      </p>
+      {% for category in question.categories.all %}
+        <p>{{category}}</p>
       {% endfor %}
-    {% endif %}
+    </div>
 
-    <br />
-    <h3>Submit a new answer</h3>
+    {% if answers %}
+      {% for answer in answers %}
+        <p>
+          {{answer.text}}
+          Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
+        </p>
+        {% endfor %}
+      {% endif %}
 
-    <form id="answer_form" method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="submit" value="Submit" />
+      <br />
+      <h3>Submit a new answer</h3>
 
-    </form>
+      <form id="answer_form" method="post" action="">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" name="submit" value="Submit" />
 
+      </form>
+    </div>
   </body>
-
-{% endblock %}
-
+  {% endblock %}
 </html>
 
 Move/Sort answers based on their total votes. Highest voted at the top.

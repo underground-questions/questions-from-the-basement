@@ -3,33 +3,37 @@
 {% block nav-global %}<title>Profile</title>{% endblock %}
 
 {% block content %}
-
 <body>
 
-{% if questions %}
-<h3>Score: {{owner.score}}</h3>
-<h2>Questions from {{owner.user.username}}</h2>
-    <ul class="question_links">
-        {% for question in questions %}
-            <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
-        {% endfor %}
-    </ul>
-{% endif %}
+<div class="container">
+  <div class="row">
+    
+    {% if questions %}
+    <h3>Score: {{owner.score}}</h3>
 
-{% if request.user == owner.user %}
-    <div class="question_form">
+    <h2>Questions from {{owner.user.username}}</h2>
+        <ul class="question_links">
+            {% for question in questions %}
+                <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+  {% if request.user == owner.user %}
+      <div class="question_form">
 
-    <h2>Ask a new question</h2>
+      <h2>Ask a new question</h2>
 
-    <form id="question_form" method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="submit" value="Submit" />
-    </form>
+      <form id="question_form" method="post" action="">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" name="submit" value="Submit" />
+      </form>
 
-    </div>
-{% endif %}
+      </div>
+  {% endif %}
 
-</body>
+  </body>
+</div>
 
 {% endblock %}
