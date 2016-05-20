@@ -49,8 +49,7 @@ def profile(request, pk):
     if request.method == "POST":
         q_form = QuestionForm(request.POST)
         tags = request.POST.getlist('topic')
-        print(tags)
-        Question.handle_form(owner, q_form)
+        Question.handle_form(owner, q_form, tags)
 
     questions = Question.objects.filter(owner=owner)
     context['questions'] = questions

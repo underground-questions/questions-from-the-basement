@@ -3,10 +3,14 @@ from .models import Question, Answer, Tag
 
 
 class QuestionForm(forms.ModelForm):
+    categories = forms.MultipleChoiceField(
+                    required=False,
+                    widget=forms.CheckboxSelectMultiple,
+                    choices=Tag.TAG_CHOICES)
 
     class Meta:
         model = Question
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'categories']
 
 
 class AnswerForm(forms.ModelForm):

@@ -16,19 +16,18 @@ class Question(models.Model):
     categories = models.ManyToManyField('Tag')
     created = models.DateTimeField(auto_now_add=True)
 
-    def handle_form(owner, q_form):
+    def handle_form(owner, q_form, tags):
+        tags = q_form['categories'].value()
         if q_form.is_valid():
-            # tag = t_form.save()
-            print('want it to work')
-            # question = q_form.save(commit=False)
-            # question.owner = owner
-            # # question.categories = tag
-            #
-            # question.save()
-            # owner.score += 5
-            # owner.save()
+            print('valid')
+        #     question = q_form.save(commit=False)
+        #     question.owner = owner
+        #     question.save()
+        #
+        #     owner.score += 5
+        #     owner.save()
         else:
-            print(q_form.errors, t_form.errors, dir(t_form))
+            print(q_form.errors)
 
 class Owner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
