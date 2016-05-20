@@ -9,36 +9,37 @@
 
       <h1>{{question.title}}</h1>
       <br />
-
       <p>{{question.description}}</p>
       <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
 
       {% for category in question.categories.all %}
         <p>{{category}}</p>
       {% endfor %}
-    </div>
 
-    {% if answers %}
-      {% for answer in answers %}
-        <p>
-          {{answer.text}}
-          Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
-        </p>
-        {% endfor %}
-      {% endif %}
+      {% if answers %}
+        {% for answer in answers %}
+          <p>
+            {{answer.text}}
+            Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
+            <form id="vote_form" action="" method="post">
+              {% csrf_token %}
+              <button name="vote" type="submit" value="upvote">UPVOTE</button>
+              <button name="vote" type="submit" value="downvote">DOWNVOTE</button>
+              <input name="answer_object" type="hidden" value={{ answer.pk }}>
+            </form>
+          </p>
+          {% endfor %}
+        {% endif %}
 
-      <br />
-      <h3>Submit a new answer</h3>
+        <br />
+        <h3>Submit a new answer</h3>
 
-      <form id="answer_form" method="post" action="">
+        <form id="answer_form" method="post" action="">
           {% csrf_token %}
           {{ form.as_p }}
-          <input type="submit" name="submit" value="Submit" />
-
-      </form>
-    </div>
-  </body>
+          <input name="submit" type="submit" value="Submit" />
+        </form>
+      </div>
+    </body>
   {% endblock %}
 </html>
-
-Move/Sort answers based on their total votes. Highest voted at the top.
