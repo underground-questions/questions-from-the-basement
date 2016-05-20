@@ -6,7 +6,7 @@ class QuestionForm(forms.ModelForm):
     categories = forms.MultipleChoiceField(
                     required=False,
                     widget=forms.CheckboxSelectMultiple,
-                    choices=Tag.TAG_CHOICES)
+                    choices=[(tag, tag.topic) for tag in Tag.objects.all()])
 
     class Meta:
         model = Question
