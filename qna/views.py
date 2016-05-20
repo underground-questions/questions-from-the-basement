@@ -53,8 +53,7 @@ def profile(request, pk):
     questions = Question.objects.filter(owner=owner)
     context['questions'] = questions
 
-    form = QuestionForm()
-    context['form'] = form
+    context['form'] = QuestionForm()
     return render(request, 'qna/profile.html', context)
 
 
