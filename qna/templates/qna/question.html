@@ -37,6 +37,8 @@
 
         <form id="answer_form" method="post" action="">
           {% csrf_token %}
+          <!-- <label for="">titleasjdfhkasjd</label>
+          <input id="id_title" maxlength="250" name="title" type="text"> -->
           {{ form.as_p }}
           <input name="submit" type="submit" value="Submit" />
         </form>
