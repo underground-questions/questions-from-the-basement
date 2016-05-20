@@ -50,7 +50,7 @@ def question_detail(request, pk):
             print(form.errors)
 
     answers = Answer.objects.filter(question=question)
-    answers.order_by('-votes')
+    answers = answers.order_by('-votes')
     context['answers'] = answers
 
     form = AnswerForm()

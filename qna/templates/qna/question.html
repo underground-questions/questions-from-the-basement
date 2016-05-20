@@ -19,7 +19,8 @@
       {% if answers %}
         {% for answer in answers %}
           <p>
-            {{answer.text}}
+            {{answer.text}}<br/>
+            Score: {{answer.votes}}
             <br />
               Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a> on {{answer.created}}
             <form id="vote_form" action="" method="post">
