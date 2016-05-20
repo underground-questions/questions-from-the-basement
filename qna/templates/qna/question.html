@@ -21,7 +21,7 @@
           <p>
             {{answer.text}}
             <br />
-              Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
+              Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a> on {{answer.created}}
             <form id="vote_form" action="" method="post">
               {% csrf_token %}
               <button name="vote" type="submit" value="upvote">UPVOTE</button>
