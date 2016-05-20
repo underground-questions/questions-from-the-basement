@@ -22,7 +22,26 @@ def question_detail(request, pk):
 
     if request.method == "POST":
         form = AnswerForm(request.POST)
-        if form.is_valid():
+        vote = request.POST.get('vote', False)
+        if vote == 'upvote':
+            answer = Answer.objects.get(pk=request.POST['answer_object'])
+            answer.voter = request.user
+            answer.save()
+            answer.votes += 1
+            answer.save()
+            answer.owner.score += 10
+            answer.owner.save()
+        elif vote == 'downvote':
+            answer = Answer.objects.get(pk=request.POST['answer_object'])
+            answer.voter = request.user
+            answer.save()
+            answer.votes -= 1
+            answer.save()
+            answer.owner.score -= 5
+            answer.owner.save()
+            request.user.owner.score -= 1
+            request.user.save()
+        elif form.is_valid():
             answer = form.save(commit=False)
             answer.owner = request.user.owner
             answer.question = question

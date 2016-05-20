@@ -24,6 +24,12 @@
       <p>
         {{answer.text}}
         Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a>
+        <form id="vote_form" action="" method="post">
+          {% csrf_token %}
+          <button name="vote" type="submit" value="upvote">UPVOTE</button>
+          <button name="vote" type="submit" value="downvote">DOWNVOTE</button>
+          <input name="answer_object" type="hidden" value={{ answer.pk }}>
+        </form>
       </p>
       {% endfor %}
     {% endif %}
@@ -34,7 +40,8 @@
     <form id="answer_form" method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="submit" value="Submit" />
+        <input name="submit" type="submit" value="Submit" />
+
     </form>
 
   </body>
