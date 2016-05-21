@@ -51,7 +51,7 @@ def question_detail(request, pk):
             answer.owner.score -= 5
             answer.owner.save()
             request.user.owner.score -= 1
-            request.user.save()
+            request.user.owner.save()
         elif form.is_valid():
             answer = form.save(commit=False)
             answer.owner = request.user.owner
