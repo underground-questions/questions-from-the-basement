@@ -49,11 +49,8 @@ class Owner(models.Model):
 
 
 class Tag(models.Model):
-    TAG_CHOICES = (('SQL', 'SQL'), ('Java', 'Java'), ('Python', 'Python'),
-                   ('Javascript', 'Javascript'), ('Django', 'Django'),
-                   ('C++', 'C++'), ('Ruby', 'Ruby'), ('PHP', 'PHP'))
 
-    topic = models.CharField(max_length=25, choices=TAG_CHOICES, unique=True)
+    topic = models.CharField(max_length=25, unique=True)
 
     def __str__(self):
         return self.topic
