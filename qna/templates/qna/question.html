@@ -1,17 +1,22 @@
 {% extends 'qna/base.html' %}
 {% load staticfiles %}
+{% load i18n widget_tweaks %}
 
 <title>Question</title>
 {% block content %}
+<head>
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
 <body>
   <div class="container">
-    <div class="row">
+    <div class="question_form row">
+      <div class="col-xs-12 col-md-6">
 
       <h1>{{question.title}}</h1>
       <br />
       <p>{{question.description}}</p>
       <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
-
+      Tags:
       {% for category in question.categories.all %}
         <p>{{category}}</p>
       {% endfor %}
@@ -33,16 +38,18 @@
         {% endif %}
 
         <br />
-        <h3>Submit a new answer</h3>
+        <h3>Submit an answer</h3>
 
         <form id="answer_form" method="post" action="">
           {% csrf_token %}
-          <!-- <label for="">titleasjdfhkasjd</label>
-          <input id="id_title" maxlength="250" name="title" type="text"> -->
-          {{ form.as_p }}
-          <input name="submit" type="submit" value="Submit" />
+          <label for="">Text:  </label>
+          {{ form.text|attr:"class:form-control" }}
+          <br />
+          <button type="submit" value="submit" class="btn btn-default">Submit</button>
+
         </form>
+        {% endblock %}
       </div>
-    </body>
-  {% endblock %}
-</html>
+    </div>
+  </div>
+</body>

@@ -1,32 +1,35 @@
-
 {% block content %}
+{% load i18n widget_tweaks %}
 
 {% if form.non_field_errors %}
-{% for error in form.non_field_errors %}
-<p class="errornote">
-    {{ error }}
-</p>
-{% endfor %}
+  {% for error in form.non_field_errors %}
+    <p class="errornote">
+      {{ error }}
+    </p>
+  {% endfor %}
 {% endif %}
 
+
+
 <div id="content-main">
-
-
-<form action="{% url 'login' %}" method="post" id="login-form">{% csrf_token %}
-  <div class="form-row">
-    {{ form.username.errors }}
-    {{ form.username.label_tag }} {{ form.username }}
-  </div>
-  <div class="form-row">
-    {{ form.password.errors }}
-    {{ form.password.label_tag }} {{ form.password }}
-    <input type="hidden" name="next" value="{% url 'user_redirect' %}" />
-  </div>
-  <div class="submit-row">
-    <label>&nbsp;</label><input type="submit" value="Log in" />
-  </div>
-</form>
-
+  <form action="{% url 'login' %}" method="post" id="login-form">
+    {% csrf_token %}
+    <p>
+      <h1>Please Sign In</h1>
+    </p>
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }}{{ form.username|attr:"class:form-control" }}
+    </div>
+    <div class="form-row">
+      {{ form.password.errors }}
+      {{ form.password.label_tag }} {{ form.password }}
+      <input type="hidden" name="next" value="{% url 'user_redirect' %}" />
+    </div>
+    <div class="submit-row">
+      <input type="submit" value="Log in" />
+    </div>
+  </form>
 </div>
 
 {% endblock %}

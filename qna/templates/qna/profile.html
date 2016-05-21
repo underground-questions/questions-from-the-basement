@@ -1,39 +1,50 @@
 {% extends 'qna/base.html' %}
+{% load staticfiles %}
+{% load i18n widget_tweaks %}
 
-{% block nav-global %}<title>Profile</title>{% endblock %}
-
+<title>Profile</title>
 {% block content %}
+
 <body>
 
 <div class="container">
-  <div class="row">
-    
-    {% if questions %}
-    <h3>Score: {{owner.score}}</h3>
+  <div class="question_form row">
+    <div class="col-xs-12 col-md-6">
 
-    <h2>Questions from {{owner.user.username}}</h2>
-        <ul class="question_links">
-            {% for question in questions %}
-                <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
-            {% endfor %}
-        </ul>
-    {% endif %}
+      {% if questions %}
+      <h3>Score: {{owner.score}}</h3>
+
+      <h2>Questions from {{owner.user.username}}</h2>
+          <ul class="question_links">
+              {% for question in questions %}
+                  <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
+              {% endfor %}
+          </ul>
+      {% endif %}
+      {% if request.user == owner.user %}
+          <div class="question_form">
+
+          <h2>Ask a new question</h2>
+
+          <form id="question_form" method="post" action="">
+              {% csrf_token %}
+              <label for="">Title:  </label>
+              {{ form.title|attr:"class:form-control" }}
+
+              <br /><label for="">Description:  </label>
+              {{ form.description|attr:"class:form-control" }}
+
+              <br /><label for="">Categories: </label><br />
+              {% for form in form.categories %}
+              {{form}}&nbsp;&nbsp;&nbsp;
+              {% endfor %}
+              <br /><br /><button type="submit" value="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div>
+        {% endif %}
+    </div>
   </div>
-  {% if request.user == owner.user %}
-      <div class="question_form">
+</body>
 
-      <h2>Ask a new question</h2>
-
-      <form id="question_form" method="post" action="">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" name="submit" value="Submit" />
-      </form>
-
-      </div>
-  {% endif %}
-
-  </body>
-</div>
 
 {% endblock %}
