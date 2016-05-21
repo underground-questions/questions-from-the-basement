@@ -4,8 +4,36 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView
+from rest_framework import viewsets
 from .forms import QuestionForm, AnswerForm
-from .models import Question, Answer, Owner
+from .models import Question, Answer, Owner, Tag
+from .serializers import QuestionSerializer, AnswerSerializer
+from .serializers import OwnerSerializer, TagSerializer, UserSerializer
+
+
+class QuestionsViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all().order_by('created')
+    serializer_class = QuestionSerializer
+
+
+class AnswersViewSet(viewsets.ModelViewSet):
+    queryset = Answer.objects.all().order_by('-votes')
+    serializer_class = AnswerSerializer
+
+
+class OwnersViewSet(viewsets.ModelViewSet):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
+
+
+class TagsViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class UsersViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 def index(request):
