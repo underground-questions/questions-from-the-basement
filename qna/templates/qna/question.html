@@ -30,13 +30,15 @@
         {% for answer in answers %}
         <div class="row">
           <div class="col-xs-1">
-            {% if request.user.owner != answer.owner %}
-              <form id="vote_form" action="" method="post">
-                {% csrf_token %}
-                <button name="vote" class="btn btn-xs btn-default" type="submit" value="upvote"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-                <button name="vote" class="btn btn-xs btn-default" type="submit" value="downvote"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-                <input name="answer_object" type="hidden" value={{ answer.pk }}>
-              </form>
+            {% if user.is_authenticated %}
+              {% if request.user.owner != answer.owner %}
+                <form id="vote_form" action="" method="post">
+                  {% csrf_token %}
+                  <button name="vote" class="btn btn-xs btn-default" type="submit" value="upvote"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                  <button name="vote" class="btn btn-xs btn-default" type="submit" value="downvote"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                  <input name="answer_object" type="hidden" value={{ answer.pk }}>
+                </form>
+              {% endif %}
             {% endif %}
           </div>
           <div class="col-xs-11">
