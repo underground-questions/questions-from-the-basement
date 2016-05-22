@@ -15,7 +15,7 @@
           <h3><p>{{question.description}}</p></h3>
           <div class"question">
           Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}
-          Tags:
+          <br />Tags:
           {% for category in question.categories.all %}
             {{category}}
           {% endfor %}

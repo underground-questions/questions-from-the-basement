@@ -41,9 +41,13 @@ def index(request):
     if sort_by == 'popular':
         sort = 'Most Answered'
         paginator = get_popular_questions(15)
+    elif sort_by == 'score':
+        sort = 'Highest Score'
+        paginator = get_most_voted_question(15)
     else:
         sort = 'Most Recent'
         paginator = get_recent_questions(15)
+
 
     page = request.GET.get('page')
     try:
@@ -85,9 +89,13 @@ def get_most_voted_question(count):
         FROM qna_question q
         JOIN qna_answer a
             ON a.question_id = q.id
-        JOIN q
+        GROUP BY q.id
+        ORDER BY SUM(a.votes) DESC
     '''
-    pass
+    questions = Question.objects.raw(sql)
+    paginator = Paginator(questions, count)
+    paginator._count = len(list(questions))
+    return paginator
 
 
 def question_detail(request, pk):
