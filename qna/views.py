@@ -37,8 +37,14 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 
 def index(request):
-    recent_questions = Question.objects.order_by('-created')
-    paginator = Paginator(recent_questions, 15)
+    sort_by = request.GET.get('sort_by')
+    if sort_by == 'popular':
+        sort = 'Most Answered'
+        paginator = get_popular_questions(15)
+    else:
+        sort = 'Most Recent'
+        paginator = get_recent_questions(15)
+
     page = request.GET.get('page')
     try:
         questions = paginator.page(page)
@@ -49,10 +55,41 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         questions = paginator.page(paginator.num_pages)
     form = QuestionForm()
-    context = {'questions': questions, 'form': form}
+    context = {'questions': questions, 'form': form, 'sort': sort}
     return render(request, 'qna/index.html', context)
 
 
+def get_recent_questions(count):
+    questions = Question.objects.order_by('-created')
+    return Paginator(questions, count)
+
+
+def get_popular_questions(count):
+    sql = '''
+        SELECT q.*
+        FROM qna_question q
+        JOIN qna_answer a
+            ON a.question_id = q.id
+        GROUP BY q.id
+        ORDER BY count(1) DESC
+    '''
+    questions = Question.objects.raw(sql)
+    paginator = Paginator(questions, count)
+    paginator._count = len(list(questions))
+    return paginator
+
+
+def get_most_voted_question(count):
+    sql = '''
+        SELECT q.*
+        FROM qna_question q
+        JOIN qna_answer a
+            ON a.question_id = q.id
+        JOIN q
+    '''
+    pass
+
+    
 def question_detail(request, pk):
     context = {}
 

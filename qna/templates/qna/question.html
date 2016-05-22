@@ -5,21 +5,23 @@
 <title>Question</title>
 {% block content %}
 <head>
-  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 </head>
+
 <body>
   <div class="container">
     <div class="question_form row">
       <div class="col-xs-12 col-md-6">
 
       <h1>{{question.title}}</h1>
-      <br />
-      <p>{{question.description}}</p>
+      <h3><p>{{question.description}}</p></h3>
       <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
       Tags:
+      <br />
       {% for category in question.categories.all %}
-        <p>{{category}}</p>
+        {{category}}
       {% endfor %}
+      <br />
 
       {% if answers %}
         {% for answer in answers %}
@@ -30,8 +32,8 @@
               Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a> on {{answer.created}}
             <form id="vote_form" action="" method="post">
               {% csrf_token %}
-              <button name="vote" type="submit" value="upvote">UPVOTE</button>
-              <button name="vote" type="submit" value="downvote">DOWNVOTE</button>
+              <button name="vote" type="submit" value="upvote"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+              <button name="vote" type="submit" value="downvote"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
               <input name="answer_object" type="hidden" value={{ answer.pk }}>
             </form>
           </p>
@@ -39,11 +41,10 @@
         {% endif %}
 
         <br />
-        <h3>Submit an answer</h3>
+        <h3>Submit an answer:</h3>
 
         <form id="answer_form" method="post" action="">
           {% csrf_token %}
-          <label for="">Text:  </label>
           {{ form.text|attr:"class:form-control" }}
           <br />
           <button type="submit" value="submit" class="btn btn-default">Submit</button>
