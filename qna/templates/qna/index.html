@@ -4,10 +4,13 @@
 <div class="container">
   <br />
   <div class="row">
-    <p><b>
-      <h2>Welcome to Underground Questions.</h2>
-      Feel free to browse, but you must be logged in to post new questions or answer existing questions.
-    </b></p>
+    <div class="jumbotron">
+      <p><b>
+        <h2>Welcome to Underground Questions.</h2>
+        Underground Questions is a community of 3 programmers, just like you, helping each other. Join them; it only takes a minute or
+        feel free to browse, but you must be logged in to post new questions or answer existing questions.
+      </b></p>
+    </div>
   </div>
 
   <ul class="nav nav-tabs">
@@ -25,13 +28,14 @@
   <div class="row">
     <h2> {{ sort }} Questions </h2>
   </div>
-
-  {% for question in questions %}
-  <div class="row question_print">
-    <p><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></p>
-    <p>Submitted on {{question.created}} by <a href="{% url 'profile' question.owner.id %}"> {{question.owner.user.username}}</a></p>
-  </div>
-  {% endfor %}
+  <figure class="highlight">
+    {% for question in questions %}
+    <div class="row question_print">
+      <p><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></p>
+      <p>Submitted on {{question.created}} by <a href="{% url 'profile' question.owner.id %}"> {{question.owner.user.username}}</a></p>
+    </div>
+    {% endfor %}
+  </figure>
 
   <nav>
     <ul class="pager pull-left">
@@ -48,7 +52,7 @@
     </ul>
   </nav>
 
-  <div class="clear"></div>
+  <div class="clearfix"></div>
 
   {% if user.is_authenticated %}
   <div class="question_form row">
@@ -68,9 +72,10 @@
 
           <br /><label for="">Categories: </label><br />
           {% for form in form.categories %}
-          {{form}}&nbsp;&nbsp;&nbsp;
+            {{form}}&nbsp;&nbsp;&nbsp;
           {% endfor %}
           <br /><br /><button type="submit" value="submit" class="btn btn-default">Submit</button>
+        </form>
       </form>
     </div>
   </div>

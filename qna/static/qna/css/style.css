@@ -1,7 +1,13 @@
+
+
 body {
   padding-top: 50px;
 }
 
-.clear {
-  clear: both;
+.container {
+  width: 1000px;
+}
+
+.header {
+  background-color: #fff;
 }
