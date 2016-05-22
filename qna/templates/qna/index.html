@@ -1,18 +1,24 @@
 {% extends 'qna/base.html' %}
-
+{% load i18n widget_tweaks %}
+{% load staticfiles %}
 {% block content %}
+
+
 <div class="container">
-  <br />
   <div class="row">
-    <div class="jumbotron">
-      <p><b>
-        <h2>Welcome to Underground Questions.</h2>
-        Underground Questions is a community of 3 programmers, just like you, helping each other. Join them; it only takes a minute or
-        feel free to browse, but you must be logged in to post new questions or answer existing questions.
-      </b></p>
+    <br />
+    <div class"col-xs-12 col-md-8 col-sm-4">
+      <div class="jumbotron">
+        <p><b>
+          <h2>Welcome to Underground Questions.</h2>
+          Underground Questions is a community of 3 programmers, just like you, helping each other. Join them; it only takes a minute or
+          feel free to browse, but you must be logged in to post new questions or answer existing questions.
+        </b></p>
+      </div>
     </div>
   </div>
 
+  <!-- dropdown sort -->
   <ul class="nav nav-tabs">
     <li role="presentation" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -25,18 +31,24 @@
     </li>
   </ul>
 
+  <!-- list all the questions! -->
   <div class="row">
-    <h2> {{ sort }} Questions </h2>
-  </div>
-  <figure class="highlight">
-    {% for question in questions %}
-    <div class="row question_print">
-      <p><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></p>
-      <p>Submitted on {{question.created}} by <a href="{% url 'profile' question.owner.id %}"> {{question.owner.user.username}}</a></p>
+    <div class"col-xs-12">
+      <h2> {{ sort }} Questions </h2>
+      <figure class="highlight">
+        {% for question in questions %}
+        <!-- <div class="row question_print"> -->
+          <p><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></p>
+          <div class="created">
+            Submitted on {{question.created}} by <a href="{% url 'profile' question.owner.id %}"> {{question.owner.user.username}}</a></p>
+          </div>
+          <br />
+        {% endfor %}
+      </figure>
     </div>
-    {% endfor %}
-  </figure>
+  </div>
 
+  <!-- pagination -->
   <nav>
     <ul class="pager pull-left">
       {% if questions.has_previous %}
@@ -54,28 +66,25 @@
 
   <div class="clearfix"></div>
 
+  <!-- submit question -->
   {% if user.is_authenticated %}
   <div class="question_form row">
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-sm-6 col-md-8">
       <h2>Ask a new question</h2>
 
-      {% load i18n widget_tweaks %}
-      <form id="question_form" class="form-horizontal" role="form" action="." method="post">
+      <form id="question_form" method="post" action="/profile/{{user.id}}">
         {% csrf_token %}
-        <form id="question_form" method="post" action="">
-          {% csrf_token %}
-          <label for="">Title:  </label>
-          {{ form.title|attr:"class:form-control" }}
+        <label for="">Title:  </label>
+        {{ form.title|attr:"class:form-control" }}
 
-          <br /><label for="">Description:  </label>
-          {{ form.description|attr:"class:form-control" }}
+        <br /><label for="">Description:  </label>
+        {{ form.description|attr:"class:form-control" }}
 
-          <br /><label for="">Categories: </label><br />
-          {% for form in form.categories %}
-            {{form}}&nbsp;&nbsp;&nbsp;
-          {% endfor %}
-          <br /><br /><button type="submit" value="submit" class="btn btn-default">Submit</button>
-        </form>
+        <br /><label for="">Categories: </label><br />
+        {% for form in form.categories %}
+          {{form}}&nbsp;&nbsp;&nbsp;
+        {% endfor %}
+        <br /><br /><button type="submit" value="submit" class="btn btn-default">Submit</button>
       </form>
     </div>
   </div>

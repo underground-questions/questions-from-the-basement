@@ -2,49 +2,47 @@
 {% load staticfiles %}
 {% load i18n widget_tweaks %}
 
-<title>Profile</title>
 {% block content %}
-
-<body>
 
 <div class="container">
   <div class="question_form row">
-    <div class="col-xs-12 col-md-6">
-
+    <div class="col-xs-12 col-sm-6 col-md-8">
       {% if questions %}
       <h3>Score: {{owner.score}}</h3>
 
-      <h2>Questions from {{owner.user.username}}</h2>
-          <ul class="question_links">
-              {% for question in questions %}
-                  <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
-              {% endfor %}
-          </ul>
+      <h2><b>Questions from {{owner.user.username}}</b></h2>
+        <ul class="question_links">
+          {% for question in questions %}
+            <a href="{% url 'question_detail' question.id %}"><li>{{question.title}}</li></a>
+          {% endfor %}
+        </ul>
       {% endif %}
-      {% if request.user == owner.user %}
-          <div class="question_form">
 
+    <!-- submit question-->
+    {% if request.user == owner.user %}
+      <div class="row">
+        <div class="col-xs-12">
           <h2>Ask a new question</h2>
 
           <form id="question_form" method="post" action="">
-              {% csrf_token %}
-              <label for="">Title:  </label>
-              {{ form.title|attr:"class:form-control" }}
+            {% csrf_token %}
+            <label for="">Title:  </label>
+            {{ form.title|attr:"class:form-control" }}
 
-              <br /><label for="">Description:  </label>
-              {{ form.description|attr:"class:form-control" }}
+            <br /><label for="">Description:  </label>
+            {{ form.description|attr:"class:form-control" }}
 
-              <br /><label for="">Categories: </label><br />
-              {% for form in form.categories %}
-              {{form}}&nbsp;&nbsp;&nbsp;
-              {% endfor %}
-              <br /><br /><button type="submit" value="submit" class="btn btn-default">Submit</button>
+            <br /><label for="">Categories: </label><br />
+            {% for form in form.categories %}
+            {{form}}&nbsp;&nbsp;&nbsp;
+            {% endfor %}
+            <br /><br /><button type="submit" value="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
-        {% endif %}
-    </div>
+      </div>
+      {% endif %}
   </div>
-</body>
+</div>
 
 
 {% endblock %}

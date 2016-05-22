@@ -2,56 +2,69 @@
 {% load staticfiles %}
 {% load i18n widget_tweaks %}
 
-<title>Question</title>
 {% block content %}
-<head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-</head>
 
-<body>
-  <div class="container">
-    <div class="question_form row">
-      <div class="col-xs-12 col-md-6">
+<div class="container">
+  <div class="question_form row">
+    <div class="col-xs-12 col-md-6">
 
-      <h1>{{question.title}}</h1>
-      <h3><p>{{question.description}}</p></h3>
-      <p>Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}</p>
-      Tags:
-      <br />
-      {% for category in question.categories.all %}
-        {{category}}
-      {% endfor %}
-      <br />
+      <!-- show question -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h1><b>{{question.title}}</b></h1>
+          <h3><p>{{question.description}}</p></h3>
+          <div class"question">
+          Asked by <a href="{% url 'profile' question.owner.id %}">{{question.owner.user.username}}</a> on {{question.created}}
+          Tags:
+          {% for category in question.categories.all %}
+            {{category}}
+          {% endfor %}
+          </div>
+          <br />
+          <br />
+        </div>
+      </div>
 
+      <!-- show answers -->
       {% if answers %}
         {% for answer in answers %}
-          <p>
-            {{answer.text}}<br/>
-            Score: {{answer.votes}}
-            <br />
-              Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a> on {{answer.created}}
-            <form id="vote_form" action="" method="post">
-              {% csrf_token %}
-              <button name="vote" type="submit" value="upvote"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-              <button name="vote" type="submit" value="downvote"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-              <input name="answer_object" type="hidden" value={{ answer.pk }}>
-            </form>
-          </p>
-          {% endfor %}
-        {% endif %}
-
+        <div class="row">
+          <div class="col-xs-1">
+            {% if request.user.owner != answer.owner %}
+              <form id="vote_form" action="" method="post">
+                {% csrf_token %}
+                <button name="vote" class="btn btn-xs btn-default" type="submit" value="upvote"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                <button name="vote" class="btn btn-xs btn-default" type="submit" value="downvote"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                <input name="answer_object" type="hidden" value={{ answer.pk }}>
+              </form>
+            {% endif %}
+          </div>
+          <div class="col-xs-11">
+            <div class="answer">{{answer.text}}</div>
+            <div class="answer">Score: {{answer.votes}}</div>
+            <div class="created">Posted by: <a href="{% url 'profile' answer.owner.id %}">{{answer.owner.user.username}}</a> on {{answer.created}}</div>
+          </div>
+        </div>
         <br />
-        <h3>Submit an answer:</h3>
+        {% endfor %}
+      {% endif %}
 
-        <form id="answer_form" method="post" action="">
-          {% csrf_token %}
-          {{ form.text|attr:"class:form-control" }}
+      <!-- submit answer -->
+      <div class="row">
+        <div class="col-xs-12">
           <br />
-          <button type="submit" value="submit" class="btn btn-default">Submit</button>
+          <h3>Submit an answer:</h3>
 
-        </form>
-        {% endblock %}
+          <form id="answer_form" method="post" action="">
+            {% csrf_token %}
+            {{ form.text|attr:"class:form-control" }}
+            <br />
+            <button type="submit" value="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div>
       </div>
+
     </div>
   </div>
-</body>
+</div>
+{% endblock %}

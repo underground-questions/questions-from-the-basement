@@ -89,7 +89,7 @@ def get_most_voted_question(count):
     '''
     pass
 
-    
+
 def question_detail(request, pk):
     context = {}
 
@@ -146,6 +146,7 @@ def profile(request, pk):
         Question.handle_form(owner, form)
 
     questions = Question.objects.filter(owner=owner)
+    questions = questions.order_by('-created')
     context['questions'] = questions
 
     context['form'] = QuestionForm()

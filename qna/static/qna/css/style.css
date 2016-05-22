@@ -1,5 +1,41 @@
+@import
+url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import
+url(https://fonts.googleapis.com/css?family=Monoton);
 
+.navbar-default .navbar-brand {
+  font-family: 'Monoton';
+  color: #009ACD;
+}
 
+.navbar-default .navbar-nav>li>a {
+  color: #009ACD;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.navbar-default .navbar-text {
+  text-transform: uppercase;
+}
+
+.nav-tabs>li>a {
+  font-size:14px;
+}
+
+.answer, .question {
+  font-size: 16px;
+}
+.created {
+  font-size: 14px;
+}
+h1, h2, h3, h4, h5, h6, p, div{
+    font-family: 'Roboto';
+}
+
+li {
+  font-size:16px;
+}
 body {
   padding-top: 50px;
 }
@@ -10,4 +46,33 @@ body {
 
 .header {
   background-color: #fff;
+}
+
+.login-form, .user-form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  padding: 15px;
+  font-size: 14px;
+}
+
+.comment {
+  margin-right: 0;
+  margin-left: 0;
+  background-color: #fff;
+  border-color: #ddd;
+  border-width: 1px;
+  border-radius: 4px 4px 0 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+#vote_form button {
+  margin: 2px 0;
 }
