@@ -63,6 +63,16 @@ def index(request):
     return render(request, 'qna/index.html', context)
 
 
+# def get_tag_questions(count, tag_id):
+#     sql = '''
+#         SELECT q.*
+#         FROM qna_question q
+#         JOIN qna_question_categories c
+#             ON q.id = c.question_id
+#         WHERE c.tag_id = ''' + tag_id
+#     questions = Question.objects.raw(sql)
+#     return Paginator(questions, count)
+
 def get_recent_questions(count):
     questions = Question.objects.order_by('-created')
     return Paginator(questions, count)
