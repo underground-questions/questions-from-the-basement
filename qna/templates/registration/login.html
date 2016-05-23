@@ -1,18 +1,7 @@
-{% block content %}
+{% extends 'qna/base.html' %}
 {% load i18n widget_tweaks %}
 {% load staticfiles %}
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="../../favicon.ico">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-  <link href={% static 'qna/css/style.css' %} rel="stylesheet">
-  <title>Underground Questions Login</title>
-</head>
+{% block content %}
 
 <div class="container">
   <div class="login_form row">
@@ -25,15 +14,18 @@
         {{ form.username|attr:"class:login-control" }}
         {{ form.username.errors }}
       </div>
+
       <div class="form-row">
         {{ form.password.label_tag }}<br />
         {{ form.password }}
         {{ form.password.errors }}
         <input type="hidden" name="next" value="{% url 'user_redirect' %}" />
       </div>
+
       <div class="submit-row">
         <br /><button type="submit" value="submit" class="btn btn-default">Log in</button>
       </div>
+
       {% if form.non_field_errors %}
         {% for error in form.non_field_errors %}
           <p class="errornote">
@@ -42,6 +34,7 @@
         {% endfor %}
       {% endif %}
       <br /><p class="message">Not registered? <a href="{% url 'register' %}">Create an account</a></p>
+      <br /><p class="message"><a href="{% url 'home' %}">Back to home </a></p>
     </form>
   </div>
 </div>
